@@ -3,42 +3,57 @@ import React, { useState, useEffect } from 'react';
 // importo axios
 import axios from 'axios';
 
+// Stato per i dati del form
+const initialFormData = {
+
+    title: "",
+    autore: "",
+    contenuto: "",
+    categoria: "",
+
+};
+
+
 const ArticleList = () => {
 
-    // stato iniziale degli articoli in pagina
-    const [articles, setArticles] = useState([
-        { id: 1, title: 'Articolo 1', autore: 'Autore 1', contenuto: 'Contenuto dell\'articolo 1', categoria: 'Categoria 1' },
-        { id: 2, title: 'Articolo 2', autore: 'Autore 2', contenuto: 'Contenuto dell\'articolo 2', categoria: 'Categoria 2' },
-        { id: 3, title: 'Articolo 3', autore: 'Autore 3', contenuto: 'Contenuto dell\'articolo 3', categoria: 'Categoria 3' },
-        { id: 4, title: 'Articolo 4', autore: 'Autore 4', contenuto: 'Contenuto dell\'articolo 4', categoria: 'Categoria 4' },
-        { id: 5, title: 'Articolo 5', autore: 'Autore 5', contenuto: 'Contenuto dell\'articolo 5', categoria: 'Categoria 5' },
-        { id: 6, title: 'Articolo 6', autore: 'Autore 6', contenuto: 'Contenuto dell\'articolo 6', categoria: 'Categoria 6' },
-    ]);
+    // utilizzo dello useState per la gestione dell rray di oggetti
+    const [articles, setArticles] = useState([]);
+    // gestione delle informazioni raccolte dai campi del form
+    const [formData, setFormData] = useState(initialFormData)
 
-    // Stato per i dati del form
-    const [formData, setFormData] = useState({
+    // funzione di gestione chiamata all'API
+    function fetchArticles() {
 
-        title: '',
-        autore: '',
-        contenuto: '',
-        categoria: ''
+        axios.get("http://localhost:3000/posts")
+            .then((res) => {
+                setArticles(res.data);
+            })
+            .catch(function (error) {
+                console.log(error);
 
-    });
+            }
+            )
 
-    // Funzione generica per gestire i cambiamenti nei campi di input
-    const handleFormData = (event) => {
+    }
 
-        const { name, value } = event.target;
-        setFormData({
+    // richiamo la funzione di richiesta dati al caricamento del componente solo al primo rendering
+    useEffect(fetchArticles, []);
 
-            // mantengo gli altri valori invariati
-            ...formData,
-            // aggiorno solo il campo che è stato modificato
-            [name]: value
 
-        });
+    // Funzione di gestione delle informazioni dei campi del form
+    function handleFormData(e) {
 
-    };
+        const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+
+        setFormData((currentFormData) => ({
+
+            ...currentFormData,
+            [e.target.name]: value,
+
+        }));
+
+    }
+
 
     // Funzione per rimuovere un articolo
     const handleDelete = (id) => {
@@ -53,6 +68,7 @@ const ArticleList = () => {
 
         // evito il refresh della pagina
         event.preventDefault();
+
         // destructuring dei dati del form con successiva creazione di un nuovo articolo
         const { title, autore, contenuto, categoria } = formData;
 
@@ -156,5 +172,6 @@ const ArticleList = () => {
     );
 
 };
+
 
 export default ArticleList;
