@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+// importo axios
+import axios from 'axios';
 
 const ArticleList = () => {
 
