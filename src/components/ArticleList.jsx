@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // importo axios
 import axios from 'axios';
@@ -17,16 +17,17 @@ const initialFormData = {
 const ArticleList = () => {
 
     // utilizzo dello useState per la gestione dell rray di oggetti
-    const [articles, setArticles] = useState([]);
+    const [posts, setPosts] = useState([]);
     // gestione delle informazioni raccolte dai campi del form
     const [formData, setFormData] = useState(initialFormData)
 
     // funzione di gestione chiamata all'API
-    function fetchArticles() {
+    function fetchPosts() {
 
         axios.get("http://localhost:3000/posts")
             .then((res) => {
-                setArticles(res.data);
+
+                setPosts(res.data);
             })
             .catch(function (error) {
                 console.log(error);
@@ -37,7 +38,7 @@ const ArticleList = () => {
     }
 
     // richiamo la funzione di richiesta dati al caricamento del componente solo al primo rendering
-    useEffect(fetchArticles, []);
+    useEffect(fetchPosts, []);
 
 
     // Funzione di gestione delle informazioni dei campi del form
@@ -54,12 +55,11 @@ const ArticleList = () => {
 
     }
 
-
     // Funzione per rimuovere un articolo
     const handleDelete = (id) => {
 
         // filtro l'artiicolo per id e lo rimuovo dalla mia lista
-        setArticles(articles.filter(article => article.id !== id));
+        setPosts(posts.filter(post => post.id !== id));
 
     };
 
@@ -73,8 +73,8 @@ const ArticleList = () => {
         const { title, autore, contenuto, categoria } = formData;
 
         if (title && autore && contenuto && categoria) {
-            const newArticle = {
-                id: articles.length + 1,
+            const newPost = {
+                id: posts.length + 1,
                 title,
                 autore,
                 contenuto,
@@ -83,7 +83,7 @@ const ArticleList = () => {
             };
 
             // aggiungo il nuovo articolo alla mia lista
-            setArticles([...articles, newArticle]);
+            setPosts([...posts, newPost]);
 
             // resetto lo stato del form (ripristina i campi "vuoti")
             setFormData({
@@ -106,7 +106,7 @@ const ArticleList = () => {
             <h2>Aggiungi un Nuovo Articolo</h2>
 
             {/* Form per aggiungere un articolo */}
-            <form onSubmit={handleSubmit}>
+            <form id="formPost" action="#" onSubmit={handleSubmit}>
 
                 {/* Campo per il titolo dell'articolo */}
                 <input
@@ -132,7 +132,7 @@ const ArticleList = () => {
                     value={formData.contenuto}
                     onChange={handleFormData}
                     placeholder="Inserisci il contenuto dell'articolo"
-                />
+                ></textarea>
 
                 {/* Campo per la categoria dell'articolo */}
                 <input
@@ -151,15 +151,15 @@ const ArticleList = () => {
             {/* Lista degli articoli */}
             <ul>
 
-                {articles.map(article => (
+                {posts.map(post => (
 
-                    <li key={article.id}>
+                    <li key={post.id}>
 
-                        <h3>{article.title}</h3>
-                        <p><strong>Autore:</strong> {article.autore}</p>
-                        <p><strong>Contenuto:</strong> {article.contenuto}</p>
-                        <p><strong>Categoria:</strong> {article.categoria}</p>
-                        <button onClick={() => handleDelete(article.id)}>Elimina</button>
+                        <h3>{post.title}</h3>
+                        <p><strong>Contenuto:</strong> {post.content}</p>
+                        <img src={post.image} alt={post.title} />
+                        <p>{post.tags.join(', ')}</p>
+                        <button onClick={() => handleDelete(post.id)}>Elimina</button>
 
                     </li>
 
@@ -171,7 +171,7 @@ const ArticleList = () => {
 
     );
 
-};
+}
 
 
 export default ArticleList;

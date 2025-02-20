@@ -1,4 +1,152 @@
-:root {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+
+}
+
+
+div {
+
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+
+}
+
+
+h2 {
+
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+
+}
+
+
+form {
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+}
+
+
+input,
+textarea {
+
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+
+}
+
+textarea {
+
+  resize: vertical;
+  min-height: 100px;
+
+}
+
+
+button {
+
+  padding: 10px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+}
+
+button:hover {
+
+  background-color: #45a049;
+
+}
+
+
+ul {
+
+  list-style-type: none;
+  margin-top: 30px;
+
+}
+
+
+li {
+
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+
+li h3 {
+
+  font-size: 20px;
+  color: #333;
+
+}
+
+li p {
+
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+
+}
+
+li img {
+
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+
+}
+
+/* Bottone per eliminare un articolo */
+button {
+
+  background-color: #FF4136;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  color: white;
+
+}
+
+button:hover {
+
+  background-color: #e53935;
+
+}
+
+
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +213,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
