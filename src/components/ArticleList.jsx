@@ -134,6 +134,13 @@ const ArticleList = () => {
                     placeholder="Inserisci il contenuto dell'articolo"
                 ></textarea>
 
+                {/* Inserisci l'immagine */}
+                <input
+                    type="file"
+                    name="image"
+                // onChange={handleImageChange}  
+                />
+
                 {/* Campo per la categoria dell'articolo */}
                 <input
                     type="text"
