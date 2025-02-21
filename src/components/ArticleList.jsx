@@ -27,7 +27,16 @@ const ArticleList = () => {
         axios.get("http://localhost:3000/posts")
             .then((res) => {
 
-                setPosts(res.data);
+                if (Array.isArray(res.data)) {
+
+                    setPosts(res.data);
+
+                } else {
+
+                    console.error("I dati ricevuti non sono un array");
+
+                }
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -73,6 +82,7 @@ const ArticleList = () => {
         const { title, autore, contenuto, categoria } = formData;
 
         if (title && autore && contenuto && categoria) {
+
             const newPost = {
                 id: posts.length + 1,
                 title,
@@ -82,18 +92,35 @@ const ArticleList = () => {
 
             };
 
+            // Faccio una richiesta POST per aggiungere un nuovo articolo al backend
+            axios.post("http://localhost:3000/posts", newPost)
+                .then(() => {
+
+                    // Dopo aver aggiunto un nuovo articolo, ricarico la lista degli articoli
+                    fetchPosts();
+                    // Resetto lo stato del form
+                    setFormData(initialFormData);
+
+                })
+                .catch((error) => {
+
+                    console.log(error);
+
+                });
+
+
             // aggiungo il nuovo articolo alla mia lista
-            setPosts([...posts, newPost]);
+            // setPosts([...posts, newPost]);
 
             // resetto lo stato del form (ripristina i campi "vuoti")
-            setFormData({
+            // setFormData({
 
-                title: '',
-                autore: '',
-                contenuto: '',
-                categoria: ''
+            //     title: '',
+            //     autore: '',
+            //     contenuto: '',
+            //     categoria: ''
 
-            });
+            // });
 
         }
 
@@ -165,7 +192,7 @@ const ArticleList = () => {
                         <h3>{post.title}</h3>
                         <p><strong>Contenuto:</strong> {post.content}</p>
                         <img src={post.image} alt={post.title} />
-                        <p>{post.tags.join(', ')}</p>
+                        <p>{post.tags ? post.tags.join(', ') : 'Nessun tag disponibile'}</p>
                         <button onClick={() => handleDelete(post.id)}>Elimina</button>
 
                     </li>
