@@ -41,8 +41,7 @@ const ArticleList = () => {
             .catch(function (error) {
                 console.log(error);
 
-            }
-            )
+            })
 
     }
 
@@ -67,10 +66,26 @@ const ArticleList = () => {
     // Funzione per rimuovere un articolo
     const handleDelete = (id) => {
 
-        // filtro l'artiicolo per id e lo rimuovo dalla mia lista
-        setPosts(posts.filter(post => post.id !== id));
+        axios.delete(`http://localhost:3000/posts/${id}`)
+
+            .then(() => {
+
+                // Dopo che il post è stato eliminato, aggiorno la lista dei post
+                setPosts(posts.filter(post => post.id !== id));
+
+            })
+
+            .catch((error) => {
+
+                console.error("Errore durante l'eliminazione del post", error);
+
+            });
 
     };
+    // filtro l'artiicolo per id e lo rimuovo dalla mia lista
+    // setPosts(posts.filter(post => post.id !== id));
+
+
 
     // Funzione per gestire il submit del form
     const handleSubmit = (event) => {
@@ -206,6 +221,5 @@ const ArticleList = () => {
     );
 
 }
-
 
 export default ArticleList;
