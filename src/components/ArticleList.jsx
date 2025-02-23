@@ -96,15 +96,17 @@ const ArticleList = () => {
         // destructuring dei dati del form con successiva creazione di un nuovo articolo
         const { title, autore, contenuto, categoria } = formData;
 
+        // debug
+        console.log('Dati inviati:', formData);
+
         if (title && autore && contenuto && categoria) {
 
             const newPost = {
                 id: posts.length + 1,
-                title,
-                autore,
-                contenuto,
-                categoria
-
+                title: formData.title,
+                // autore: formData.autore,
+                content: formData.contenuto,
+                tags: [formData.categoria],
             };
 
             // Faccio una richiesta POST per aggiungere un nuovo articolo al backend
@@ -119,7 +121,7 @@ const ArticleList = () => {
                 })
                 .catch((error) => {
 
-                    console.log(error);
+                    console.log('Errore:', error.response);
 
                 });
 
